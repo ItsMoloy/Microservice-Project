@@ -1,29 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './App.css';
+
+// API base URL
+const API_URL = 'http://localhost:8000';
 
 function App() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // In a real app, this would use axios to fetch from the backend
-    // For now, we'll use mock data similar to our backend
     const fetchItems = async () => {
       try {
-        // This would be replaced with actual API call:
-        // const response = await axios.get('http://localhost:8000/api/items');
-        // setItems(response.data);
+        const response = await axios.get(`${API_URL}/api/items`);
+        setItems(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching items:", error);
+        setError("Failed to fetch items from the server. Please try again later.");
+        setLoading(false);
         
-        // Mock data for now
+        // Fallback to mock data if API is not available
         setItems([
           { id: 1, name: "Item 1", description: "Description for Item 1" },
           { id: 2, name: "Item 2", description: "Description for Item 2" },
           { id: 3, name: "Item 3", description: "Description for Item 3" },
         ]);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching items:", error);
-        setLoading(false);
       }
     };
 
@@ -39,6 +42,8 @@ function App() {
         <h2>Items List</h2>
         {loading ? (
           <p>Loading items...</p>
+        ) : error ? (
+          <div className="error-message">{error}</div>
         ) : (
           <div className="items-container">
             {items.map(item => (
