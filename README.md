@@ -12,6 +12,8 @@ A microservice architecture project with Python backend (FastAPI) and React fron
 - RESTful API with FastAPI
 - React frontend with component-based architecture
 - Form for adding new items
+- Item deletion functionality
+- Item detail view with update capability
 - API communication between frontend and backend
 
 ## Getting Started
