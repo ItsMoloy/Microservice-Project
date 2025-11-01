@@ -1,5 +1,7 @@
 # Microservice Project
 
+![Project Screenshot](assets/project-cover.png)
+
 A microservice architecture project with Python backend (FastAPI) and React frontend.
 
 ## Project Structure
