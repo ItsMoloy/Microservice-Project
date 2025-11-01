@@ -37,6 +37,16 @@ function App() {
   const handleItemAdded = (newItem) => {
     setItems(prevItems => [...prevItems, newItem]);
   };
+  
+  const handleDeleteItem = async (id) => {
+    try {
+      await axios.delete(`${API_URL}/api/items/${id}`);
+      setItems(prevItems => prevItems.filter(item => item.id !== id));
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      setError("Failed to delete item. Please try again later.");
+    }
+  };
 
   return (
     <div className="App">
@@ -57,6 +67,12 @@ function App() {
               <div className="item-card" key={item.id}>
                 <h3>{item.name}</h3>
                 <p>{item.description}</p>
+                <button 
+                  className="delete-button" 
+                  onClick={() => handleDeleteItem(item.id)}
+                >
+                  Delete
+                </button>
               </div>
             ))}
           </div>
